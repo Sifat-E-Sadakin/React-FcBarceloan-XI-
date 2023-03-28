@@ -14,14 +14,23 @@ const Landing = () => {
 
     
     let att=(id)=>{
-       
+        
+        for (const player of transferPlayers) {
+            if(player.idPlayer== id){
+                alert(player.strPlayer+ " is already in transfer list")
+                return;
+            }
+            
+        }
         let selectedPlayers = players.find(player=>player.idPlayer == id)
         transferPlayers=[...transferPlayers, selectedPlayers]
+        
         setTransferPlayers(transferPlayers)
 
         
         
      }
+    //  console.log(transferPlayers);
 
     return (
         <div className='landing'>
