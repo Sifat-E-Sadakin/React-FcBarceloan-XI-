@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { addToDb } from '../../utilities/fakedb';
 import Info from '../Info/Info';
 import Players from '../Players/Players';
 import './Landing.css'
@@ -26,23 +27,33 @@ const Landing = () => {
         transferPlayers=[...transferPlayers, selectedPlayers]
         
         setTransferPlayers(transferPlayers)
-
+        addToDb(id);
         
         
      }
     //  console.log(transferPlayers);
+    let rft=(id)=>{
+        // console.log(id);
+        let remainingPlayer = transferPlayers.filter(player=> player.idPlayer != id)
+        
+        setTransferPlayers(remainingPlayer);
+        console.log(remainingPlayer);
+        
+        
+    }
 
     return (
         <div className='landing'>
             <div className='PlayerContainer'>
                 
                   {
-                    players.map(player=> <Players player={player} att={att}></Players>)
+                    players.map(player=> <Players player={player} att={att} rft={rft} key={player.idPlayer}></Players>)
+                    
                   }
             </div>
             
             <div>
-                <Info transferPlayers={transferPlayers} ></Info>
+                <Info transferPlayers={transferPlayers} key={transferPlayers.idPlayer} ></Info>
             </div>
         </div>
     );

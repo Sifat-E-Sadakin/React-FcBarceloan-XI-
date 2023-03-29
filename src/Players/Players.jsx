@@ -7,6 +7,7 @@ const Players = (props) => {
     // console.log(+strSigning);
 
     let att=props.att;
+   let rft= props.rft;
    
 
     return (
@@ -20,6 +21,7 @@ const Players = (props) => {
                 <h5>Transfer Value : {strSigning}m $</h5>
 
                 <button className='btn' onClick={()=>att(idPlayer)} >Add to Transfer</button>
+                <button className='btnR' onClick={()=>rft(idPlayer)} >Remove from Transfer</button>
                 
            </div>
         </div>
