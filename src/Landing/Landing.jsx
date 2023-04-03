@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { addToDb } from '../../utilities/fakedb';
+import { addToDb, getShoppingCart, removeFromDb, deleteShoppingCart } from '../../utilities/fakedb';
 import Info from '../Info/Info';
 import Players from '../Players/Players';
 import './Landing.css'
@@ -12,6 +12,22 @@ const Landing = () => {
         .then(res=> res.json())
         .then(data=> setPlayers(data))
     },[])
+
+    useEffect(()=>{
+        let storedPlayers= getShoppingCart();
+        let showAddedPlayer=[];
+        
+        for (const id in storedPlayers) {
+           let addedPlayers=  players.find(player=> player.idPlayer ==id)
+           if(addedPlayers){
+           showAddedPlayer.push(addedPlayers);
+
+           }
+        }
+        //  console.log(showAddedPlayer);
+        setTransferPlayers(showAddedPlayer);
+
+    },[players])
 
     
     let att=(id)=>{
@@ -37,10 +53,18 @@ const Landing = () => {
         let remainingPlayer = transferPlayers.filter(player=> player.idPlayer != id)
         
         setTransferPlayers(remainingPlayer);
+        removeFromDb(id);
         console.log(remainingPlayer);
         
         
     }
+
+    let clearList=()=>{
+        let fakaArray = [];
+        setTransferPlayers(fakaArray);
+        deleteShoppingCart();
+        
+      }
 
     return (
         <div className='landing'>
@@ -53,7 +77,7 @@ const Landing = () => {
             </div>
             
             <div>
-                <Info transferPlayers={transferPlayers} key={transferPlayers.idPlayer} ></Info>
+                <Info transferPlayers={transferPlayers} key={transferPlayers.idPlayer} cl={clearList} ></Info>
             </div>
         </div>
     );

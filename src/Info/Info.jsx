@@ -16,15 +16,18 @@ const Info = (props) => {
         total= total+ +iterator.strSigning;
         
     }
+    
+    let clearList= props.cl;
 
     return (
         <div className='info'>
             <h4>Players Info</h4>
             <h5>Total Player in Transfer: {props.transferPlayers.length}</h5>
             {
-                listedPlayer.map(player=> <li> {player.strPlayer}</li>)
+                listedPlayer.map(player=> <li key={player.strPlayer}> {player.strPlayer} </li>)
             }
             <h3>Team Value: {total} </h3>
+            <button onClick={()=>clearList()}>Clear List</button>
         </div>
     );
 };
